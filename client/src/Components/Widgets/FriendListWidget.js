@@ -1,30 +1,11 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import WidgetWrapperFixed from '../WidgetWrapperFixed';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import Friend from '../Friend';
 
-const FriendListWidget = ({ userId }) => {
-  const dispatch = useDispatch();
+const FriendListWidget = () => {
   const { palette } = useTheme();
-  // const token = useSelector((state) => state.token);
-  // const friends = useSelector((state) => state.user.friends);
-
-  // const getFriends = async () => {
-  //   const response = await fetch(
-  //     `http://localhost:3001/users/${userId}/friends`,
-  //     {
-  //       method: 'GET',
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     }
-  //   );
-  //   const data = await response.json();
-  //   dispatch(setFriends({ friends: data }));
-  // };
-
-  // useEffect(() => {
-  //   getFriends();
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+  const { user } = useSelector((state) => state.auth);
   return (
     <WidgetWrapperFixed width={'347px'}>
       <Typography
@@ -33,19 +14,12 @@ const FriendListWidget = ({ userId }) => {
         fontWeight="500"
         sx={{ mb: '1.5rem' }}
       >
-        Friend List
+        Following
       </Typography>
-      <Box display="flex" flexDirection="column" gap="1.5rem">
-        Friend
-        {/* {friends.map((friend) => (
-          <Friend
-            key={friend._id}
-            friendId={friend._id}
-            name={`${friend.firstName} ${friend.lastName}`}
-            subtitle={friend.occupation}
-            userPicturePath={friend.picturePath}
-          />
-        ))} */}
+      <Box display="flex" flexDirection="column" gap="0.6rem">
+        {user.following.map((follow) => (
+          <Friend key={follow._id} thisUser={follow} />
+        ))}
       </Box>
     </WidgetWrapperFixed>
   );

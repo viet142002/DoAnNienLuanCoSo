@@ -39,7 +39,7 @@ const store = configureStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-const persistor = persistStore(store);
+export const persistor = persistStore(store);
 
 const DataProvider = ({ children }) => {
   return (

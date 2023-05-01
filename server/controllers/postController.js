@@ -23,11 +23,19 @@ const postController = {
       res.status(500).json(error);
     }
   },
-  getPost: async (req, res) => {
+
+  getPosts: async (req, res) => {
     try {
       const posts = await Posts.find()
         .sort('-createdAt')
-        .populate('user likes');
+        .populate('user likes', '_id avatar fullName followers')
+        .populate({
+          path: 'comments',
+          populate: {
+            path: 'user likes',
+            select: '_id avatar fullName followers',
+          },
+        });
       res.status(200).json(posts);
     } catch (error) {
       res.status(500).json(error);
@@ -65,7 +73,14 @@ const postController = {
     try {
       const posts = await Posts.find({ user: req.params.id })
         .sort('-createdAt')
-        .populate('user likes');
+        .populate('user likes', '_id avatar fullName followers')
+        .populate({
+          path: 'comments',
+          populate: {
+            path: 'user likes',
+            select: '_id avatar fullName followers',
+          },
+        });
       return res.status(200).json({ posts });
     } catch (error) {
       res.status(500).json(error);

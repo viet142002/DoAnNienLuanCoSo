@@ -9,14 +9,7 @@ const userSchema = new mongoose.Schema(
       min: 2,
       max: 50,
     },
-    firstName: {
-      type: String,
-      require: true,
-      trim: true,
-      min: 2,
-      max: 30,
-    },
-    lastName: {
+    fullName: {
       type: String,
       require: true,
       trim: true,
@@ -43,7 +36,8 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: '/pictures/avatar.jpg',
+      default:
+        'https://res.cloudinary.com/dpayvmrjo/image/upload/v1682830545/ViNet/xef51ibbrghxkzuufxxt.webp',
     },
     role: {
       type: String,

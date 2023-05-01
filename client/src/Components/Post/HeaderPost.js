@@ -1,17 +1,20 @@
 import { Box, Typography, useTheme } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 import FlexBetween from '../FlexBetween';
 import UserImage from '../UserImage';
 import ButtonFollow from '../ButtonFollow';
 import MoreAction from './MoreAction';
-import { Navigate, useNavigate } from 'react-router-dom';
 
 function HeaderPost({ auth, postData }) {
   const navigate = useNavigate();
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const isAuth = auth.user._id === postData.user._id;
-  const userName = `${postData.user.firstName} ${postData.user.lastName}`;
+
+  console.log({ PostData: postData.user });
+
   return (
     <FlexBetween>
       <FlexBetween
@@ -26,17 +29,21 @@ function HeaderPost({ auth, postData }) {
             fontWeight="500"
             sx={{
               '&:hover': {
-                color: palette.primary.light,
+                opacity: 0.6,
                 cursor: 'pointer',
               },
             }}
           >
-            {userName}
+            {postData.user.fullName}
+          </Typography>
+          <Typography color={main} variant={'subtitle2'}>
+            {moment(postData.createdAt).fromNow()}
           </Typography>
         </Box>
       </FlexBetween>
+
       {!isAuth ? (
-        <ButtonFollow data={postData.user} />
+        <ButtonFollow thisUser={postData.user} />
       ) : (
         <MoreAction auth={auth} postData={postData} />
       )}

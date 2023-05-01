@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const authRouter = require('./routers/auth');
 const userRouter = require('./routers/userRouter');
 const postRouter = require('./routers/postRouter');
+const commentRouter = require('./routers/commentRouter');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use('/api', authRouter);
 app.use('/api', userRouter);
 app.use('/api', postRouter);
+app.use('/api', commentRouter);
 
 dotenv.config();
 //CONNECTION TO DATABASE

@@ -5,8 +5,6 @@ const auth = async (req, res, next) => {
   try {
     const token = req.header('Authorization');
 
-    console.log({ token });
-
     if (!token) return res.status(500).json({ msg: 'Invalid Authentic' });
 
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);

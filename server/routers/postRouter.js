@@ -2,7 +2,7 @@ const Router = require('express').Router();
 const auth = require('../middleware/auth');
 const postController = require('../controllers/postController');
 
-Router.get('/posts', auth, postController.getPost);
+Router.get('/posts', auth, postController.getPosts);
 Router.get('/user_posts/:id', auth, postController.getUserPosts);
 Router.post('/posts', auth, postController.createPost);
 Router.patch('/post/:id', auth, postController.updatePost);

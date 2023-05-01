@@ -8,7 +8,7 @@ const userController = {
         userName: { $regex: req.query.username },
       })
         .limit(10)
-        .select('firstName lastName avatar');
+        .select('fullName avatar');
       res.json({ users });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
@@ -31,7 +31,9 @@ const userController = {
   updateUser: async (req, res) => {
     try {
       const { avatar, firstName, lastName, story, mobile } = req.body;
-      console.log(req.body);
+
+      if ({}) {
+      }
 
       await Users.findByIdAndUpdate(req.user._id, {
         userName: `${firstName}${lastName}`.toLowerCase().replace(/ /g, ''),
@@ -81,7 +83,6 @@ const userController = {
 
   unFollow: async (req, res) => {
     try {
-      console.log('vao unfollow');
       let user = await Users.find({
         _id: req.user._id,
         following: req.params.id,

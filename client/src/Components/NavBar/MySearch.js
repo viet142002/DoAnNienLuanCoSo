@@ -1,5 +1,11 @@
 import { Search } from '@mui/icons-material';
-import { Box, IconButton, InputBase } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  InputBase,
+  Typography,
+} from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -11,16 +17,18 @@ import UserCard from './UserCard';
 function MySearch({ bgColor }) {
   const [search, setSearch] = useState('');
   const [users, setUsers] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (search && auth.token) {
       let parseSearch = search.toLocaleLowerCase().replace(/ /g, '');
+      setIsLoading(true);
       getDataAPI(`search?username=${parseSearch}`, auth.token)
         .then((res) => {
           setUsers(res.data.users);
+          setIsLoading(false);
         })
         .catch((error) => {
           dispatch({
@@ -64,6 +72,14 @@ function MySearch({ bgColor }) {
           padding={'0.5rem 1.5rem'}
           zIndex={999}
         >
+          {isLoading && (
+            <FlexBetween justifyContent={'center !important'}>
+              <CircularProgress />
+            </FlexBetween>
+          )}
+          {!isLoading && users.length === 0 && (
+            <Typography>Không tìm thấy người dùng</Typography>
+          )}
           {users.map((user) => (
             <UserCard key={user._id} user={user} handleClose={handleClose} />
           ))}

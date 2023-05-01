@@ -91,9 +91,13 @@ const checkIsValidToken = (token) => (dispatch) => {
   }
 };
 
-const logout = (navigate) => async (dispatch) => {
+const logout = (navigate, persistor) => async (dispatch) => {
   try {
     localStorage.clear();
+    persistor.pause();
+    persistor.flush().then(() => {
+      return persistor.purge();
+    });
     dispatch({
       type: GLOBALTYPES.AUTH,
       payload: { user: null, token: null },

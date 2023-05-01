@@ -10,8 +10,6 @@ const commentSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
-    tag: Object,
-    reply: mongoose.Types.ObjectId,
     likes: [
       {
         type: mongoose.Types.ObjectId,

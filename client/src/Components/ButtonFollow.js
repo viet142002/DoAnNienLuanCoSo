@@ -5,24 +5,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { follow, unFollow } from '../Redux/Actions/profileAction';
 import { useTheme } from '@emotion/react';
 
-function ButtonFollow({ data }) {
+function ButtonFollow({ thisUser = [] }) {
   const { palette } = useTheme();
   const primaryDark = palette.primary.dark;
   const [isFollow, setIsFollow] = useState(false);
   const dispatch = useDispatch();
-  const { auth, profile } = useSelector((state) => state);
-
+  const { auth } = useSelector((state) => state);
   useEffect(() => {
-    if (auth.user.following.find((user) => user._id === data._id)) {
+    if (auth.user.following.find((user) => user._id === thisUser._id)) {
       setIsFollow(true);
     }
-  }, [auth.user.following, data._id]);
+  }, [auth.user.following, thisUser._id]);
 
   const handleClick = () => {
     if (isFollow) {
-      dispatch(unFollow({ user: profile.user, auth }));
+      dispatch(unFollow({ user: thisUser, auth }));
     } else {
-      dispatch(follow({ user: profile.user, auth }));
+      dispatch(follow({ user: thisUser, auth }));
     }
     setIsFollow(!isFollow);
   };

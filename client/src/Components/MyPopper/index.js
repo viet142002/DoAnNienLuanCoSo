@@ -2,7 +2,13 @@ import { Menu, MenuItem, IconButton } from '@mui/material';
 
 import { useState } from 'react';
 
-function MyPopper({ contents, children, handleDelete, handleUpdate }) {
+function MyPopper({
+  contents,
+  children,
+  handleDelete,
+  handleUpdate,
+  handleOpen,
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -44,6 +50,7 @@ function MyPopper({ contents, children, handleDelete, handleUpdate }) {
                 handleClose();
                 if (content.action === 'update') handleUpdate();
                 if (content.action === 'delete') handleDelete();
+                if (content.action === 'open') handleOpen();
               }}
               key={index}
             >

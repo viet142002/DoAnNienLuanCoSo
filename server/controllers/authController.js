@@ -19,12 +19,11 @@ const authController = {
 
       const salt = await bcrypt.genSalt(10);
       const passwordHash = await bcrypt.hash(password, salt);
-      let userName = `${firstName}${lastName}`;
-
+      const userName = `${firstName}${lastName}`;
+      const fullName = `${firstName.trim()} ${lastName.trim()}`;
       const newUser = new Users({
         userName: userName.toLowerCase().replace(/ /g, ''),
-        firstName: firstName.replace(/ /g, ''),
-        lastName: lastName.replace(/ /g, ''),
+        fullName,
         email,
         password: passwordHash,
       });

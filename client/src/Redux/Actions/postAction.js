@@ -6,7 +6,6 @@ import {
   patchDataAPI,
   deleteDataAPI,
 } from '../../utils/fetchData';
-import { createNotify, removeNotify } from './notifyAction';
 import { PROFILE_TYPES } from './profileAction';
 
 export const POST_TYPES = {
@@ -41,6 +40,7 @@ export const createPost =
         type: POST_TYPES.CREATE_POST,
         payload: res.data.newPost,
       });
+
       dispatch({
         type: PROFILE_TYPES.ADD_POST,
         payload: res.data.newPost,
@@ -66,7 +66,6 @@ export const getPosts = (token) => async (dispatch) => {
     });
 
     const res = await getDataAPI('posts', token);
-    console.log({ getPosts: res });
     dispatch({
       type: POST_TYPES.GET_POSTS,
       payload: res.data,
@@ -187,7 +186,7 @@ export const likePost =
     }
   };
 
-export const unLike =
+export const unLikePost =
   ({ post, auth }) =>
   async (dispatch) => {
     const newPost = {

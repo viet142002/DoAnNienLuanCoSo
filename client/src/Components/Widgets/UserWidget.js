@@ -1,4 +1,9 @@
-import { ManageAccountsOutlined, EditOutlined } from '@mui/icons-material';
+import {
+  ManageAccountsOutlined,
+  EditOutlined,
+  LocalPhoneRounded,
+  InfoRounded,
+} from '@mui/icons-material';
 import { Box, Typography, Divider, useTheme, ButtonBase } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -8,7 +13,6 @@ import UserImage from '../UserImage';
 import WidgetWrapperFixed from '../WidgetWrapperFixed';
 import EditProfile from '../Profile/EditProfile';
 import ButtonFollow from '../ButtonFollow';
-import HeaderInfo from '../Post/HeaderPost';
 
 const UserWidget = ({
   userData,
@@ -22,7 +26,6 @@ const UserWidget = ({
   const main = palette.neutral.main;
 
   const [onEdit, setOnEdit] = useState(false);
-  const { firstName, lastName } = userData;
   const handleClose = () => setOnEdit(false);
   const handleClick = () => {
     navigate(`/profile/${userData._id}`);
@@ -42,18 +45,15 @@ const UserWidget = ({
                 fontWeight="500"
                 sx={{
                   '&:hover': {
-                    color: palette.primary.light,
+                    opacity: 0.6,
                     cursor: 'pointer',
                   },
                 }}
               >
-                {`${firstName} ${lastName}`}
+                {userData.fullName}
               </Typography>
-              {/* <Typography color={medium}>{friends.length} friends</Typography> */}
             </Box>
           </FlexBetween>
-
-          {/* Btn edit profile || follow/unfollow */}
 
           {notMoreAction ? (
             ''
@@ -62,22 +62,22 @@ const UserWidget = ({
               <ManageAccountsOutlined />
             </ButtonBase>
           ) : (
-            <ButtonFollow data={userData} />
+            <ButtonFollow thisUser={userData} />
           )}
         </FlexBetween>
         <Divider />
 
         {/* SECOND ROW */}
-        {/* <Box p="1rem 0">
-          <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
-            <LocationOnOutlined fontSize="large" sx={{ color: main }} />
-            <Typography color={medium}>{location}</Typography>
-          </Box>
+        <Box p="1rem 0">
           <Box display="flex" alignItems="center" gap="1rem">
-            <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
-            <Typography color={medium}>{occupation}</Typography>
+            <LocalPhoneRounded fontSize="large" sx={{ color: main }} />
+            <Typography color={medium}>{userData.mobile}</Typography>
           </Box>
-        </Box> */}
+          <Box display="flex" alignItems="center" gap="1rem" mt={'0.5rem'}>
+            <InfoRounded fontSize="large" sx={{ color: main }} />
+            <Typography color={medium}>{userData.story}</Typography>
+          </Box>
+        </Box>
 
         <Divider />
 
@@ -108,7 +108,7 @@ const UserWidget = ({
           <FlexBetween gap="1rem" mb="0.5rem">
             <FlexBetween gap="1rem">
               <img
-                src="/pictures/twitter.jpg"
+                src="https://cdn.pixabay.com/photo/2016/05/01/23/20/twitter-bird-1366218__340.png"
                 alt="twitter"
                 width="60px"
                 height="60px"
@@ -126,14 +126,14 @@ const UserWidget = ({
           <FlexBetween gap="1rem">
             <FlexBetween gap="1rem">
               <img
-                src="/pictures/Linkedin.jpg"
-                alt="linkedin"
+                src="https://cdn.pixabay.com/photo/2015/05/17/10/51/facebook-770688__340.png"
+                alt="facebook"
                 width="60px"
                 height="60px"
               />
               <Box>
                 <Typography color={main} fontWeight="500">
-                  Linkedin
+                  FaceBook
                 </Typography>
                 <Typography color={medium}>Network Platform</Typography>
               </Box>

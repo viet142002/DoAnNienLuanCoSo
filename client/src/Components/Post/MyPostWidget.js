@@ -20,7 +20,7 @@ import Dropzone from 'react-dropzone';
 import UserImage from '../UserImage';
 import WidgetWrapper from '../WidgetWrapper';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createPost, updatePost } from '../../Redux/Actions/postAction';
 
 const MyPostWidget = ({

@@ -20,8 +20,9 @@ import FlexBetween from '../FlexBetween';
 import MyPopper from '../MyPopper';
 import MySearch from './MySearch';
 import notifications from '../Notifications';
+import { persistor } from '../../Redux/store';
 
-const Navbar = () => {
+function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, mode } = useSelector((state) => state.auth);
@@ -33,7 +34,7 @@ const Navbar = () => {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
-  const fullName = `${user.firstName} ${user.lastName}`;
+  const fullName = user.fullName;
 
   return (
     <FlexBetween
@@ -114,7 +115,7 @@ const Navbar = () => {
             >
               <Typography>{fullName}</Typography>
             </MenuItem>
-            <MenuItem onClick={() => dispatch(logout(navigate))}>
+            <MenuItem onClick={() => dispatch(logout(navigate, persistor))}>
               <Typography>Đăng xuất</Typography>
             </MenuItem>
           </Select>
@@ -122,6 +123,6 @@ const Navbar = () => {
       </FlexBetween>
     </FlexBetween>
   );
-};
+}
 
 export default Navbar;

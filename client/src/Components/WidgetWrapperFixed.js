@@ -6,6 +6,7 @@ const WidgetWrapperFixed = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.alt,
   borderRadius: '0.75rem',
   position: 'fixed',
+  maxWidth: '347px',
 }));
 
 export default WidgetWrapperFixed;

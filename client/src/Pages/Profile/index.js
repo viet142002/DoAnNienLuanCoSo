@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -41,7 +41,13 @@ function ProfilePage() {
 
             <Box flexBasis={'42%'}>
               {isMyProfile && <MyPostWidget auth={auth} />}
-              <PostsWidget auth={auth} posts={listPost} />
+              {listPost.posts.length === 0 && !isMyProfile ? (
+                <Typography mt={'8rem'} variant="h3" textAlign={'center'}>
+                  Người này chưa đăng bắt kỳ bài viết gì
+                </Typography>
+              ) : (
+                <PostsWidget auth={auth} posts={listPost} />
+              )}
             </Box>
 
             <Box flexBasis="26%">

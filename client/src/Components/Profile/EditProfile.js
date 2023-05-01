@@ -39,6 +39,11 @@ function EditProfile({ handleClose, open }) {
   };
 
   const handleFormSubmit = (userData) => {
+    if (!userData.firstName) delete userData.firstName;
+    if (!userData.lastName) delete userData.lastName;
+    if (!userData.mobile) delete userData.mobile;
+    if (!userData.story) delete userData.story;
+
     dispatch(updateProfileUser({ userData, avatar, auth }));
     handleClose();
   };
