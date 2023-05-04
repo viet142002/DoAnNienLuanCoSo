@@ -8,6 +8,7 @@ function Alert() {
     <div>
       {alert.loading && <Loading />}
       {alert.error && <Toast msg={alert.error} error />}
+      {alert.msg && <Toast msg={alert.msg} message />}
     </div>
   );
 }

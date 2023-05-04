@@ -6,20 +6,18 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import { Login, Register } from './Pages';
 import Alert from './Components/Alert';
-import { checkIsValidToken } from './Redux/Actions/authAction';
+import { refreshToken } from './Redux/Actions/authAction';
 import { themeSettings } from './theme';
 import { routes } from './Routes';
 import DefaultLayout from './Components/Layouts/DefaultLayout';
-import { getPosts } from './Redux/Actions/postAction';
-
 function App() {
   const { token, mode } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+
   useEffect(() => {
-    dispatch(checkIsValidToken(token));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(refreshToken());
+  }, [dispatch]);
 
   return (
     <div className="app">
