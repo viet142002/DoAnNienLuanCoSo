@@ -17,8 +17,8 @@ const FriendListWidget = () => {
         Following
       </Typography>
       <Box display="flex" flexDirection="column" gap="0.6rem">
-        {user.following.map((follow) => (
-          <Friend key={follow._id} thisUser={follow} />
+        {user.following.map((follow, index) => (
+          <Friend key={index} thisUser={follow} />
         ))}
       </Box>
     </WidgetWrapperFixed>

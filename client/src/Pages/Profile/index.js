@@ -7,7 +7,6 @@ import UserWidget from '../../Components/Widgets/UserWidget';
 
 import FriendListWidget from '../../Components/Widgets/FriendListWidget';
 
-import Loading from '../../Components/Loading';
 import { getProfileUsers } from '../../Redux/Actions/profileAction';
 import MyPostWidget from '../../Components/Post/MyPostWidget';
 import PostsWidget from '../../Components/Post/PostsWidget';

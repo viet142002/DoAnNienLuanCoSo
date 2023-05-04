@@ -20,6 +20,7 @@ const authController = {
       const passwordHash = await bcrypt.hash(password, salt);
       const userName = `${firstName.trim()} ${lastName.trim()}`;
       const fullName = `${firstName.trim()} ${lastName.trim()}`;
+
       const newUser = new Users({
         userName: userName.toLowerCase(),
         fullName,
@@ -29,6 +30,7 @@ const authController = {
 
       const access_token = createAccessToken({ id: newUser._id });
       const refresh_token = createRefreshToken({ id: newUser._id });
+
       res.cookie('refreshToken', refresh_token, {
         httpOnly: true,
         path: '/api/refresh_token',
@@ -46,7 +48,7 @@ const authController = {
         },
       });
     } catch (error) {
-      res.status(500).json({ msg: error.message });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -71,7 +73,7 @@ const authController = {
         httpOnly: true,
         secure: true,
         path: '/api/refresh_token',
-        maxAge: 30 * 24 * 60 * 60 * 1000, //30d
+        // maxAge: 30 * 24 * 60 * 60 * 1000, //30d
       });
 
       res.status(201).json({
@@ -83,7 +85,7 @@ const authController = {
         },
       });
     } catch (error) {
-      res.status(500).json({ msg: error.message });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -92,7 +94,7 @@ const authController = {
       res.clearCookie('refreshToken', { path: '/api/refresh_token' });
       res.status(200).json({ msg: 'Đã đăng xuất tài khoản.' });
     } catch (error) {
-      res.status(500).json({ msg: error.message });
+      res.status(500).json({ error: error.message });
     }
   },
 
@@ -105,11 +107,11 @@ const authController = {
         process.env.REFRESH_TOKEN_KEY,
         async (error, result) => {
           if (error)
-            return res.status(400).json({ msg: 'Vui lòng đăng nhập trước.' });
+            return res.status(400).json({ msg: 'Vui lòng đăng nhập.' });
 
           const user = await Users.findById(result.id)
             .select('-password')
-            .populate('followers following', '-password');
+            .populate('following', '-password');
           if (!user)
             return res.status(400).json({ msg: 'Tài khoản không tồn tại.' });
 
@@ -119,17 +121,17 @@ const authController = {
         }
       );
     } catch (error) {
-      res.status(500).json({ msg: error.message });
+      res.status(500).json({ error: error.message });
     }
   },
 };
 
 const createAccessToken = (payload) => {
-  return jwt.sign(payload, process.env.ACCESS_TOKEN_KEY, { expiresIn: '1d' });
+  return jwt.sign(payload, process.env.ACCESS_TOKEN_KEY, { expiresIn: '30s' });
 };
 
 const createRefreshToken = (payload) => {
-  return jwt.sign(payload, process.env.REFRESH_TOKEN_KEY, { expiresIn: '30d' });
+  return jwt.sign(payload, process.env.REFRESH_TOKEN_KEY, { expiresIn: '10m' });
 };
 
 module.exports = authController;

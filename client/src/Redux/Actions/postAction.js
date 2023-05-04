@@ -24,7 +24,7 @@ export const createPost =
     try {
       dispatch({
         type: GLOBALTYPES.ALERT,
-        payload: { loading: true },
+        payload: { loading: true, method: 'createPost' },
       });
 
       if (images.length > 0) media = await imageUpload(images);
@@ -46,7 +46,7 @@ export const createPost =
     } catch (error) {
       dispatch({
         type: GLOBALTYPES.ALERT,
-        payload: { error: error.response.data.msg },
+        payload: { error: error.response.data.error, method: 'createPost' },
       });
     }
   };
@@ -59,6 +59,7 @@ export const getPosts = (token) => async (dispatch) => {
     });
 
     const res = await getDataAPI('posts', token);
+
     dispatch({
       type: POST_TYPES.GET_POSTS,
       payload: res.data,
@@ -71,7 +72,7 @@ export const getPosts = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GLOBALTYPES.ALERT,
-      payload: { error: error.response.data.msg },
+      payload: { error: error.response.data.error, getPosts: 'getPosts' },
     });
   }
 };

@@ -1,4 +1,3 @@
-import jwtDecode from 'jwt-decode';
 import { postDataAPI } from '../../utils/fetchData';
 import { GLOBALTYPES } from './globalTypes';
 
@@ -25,7 +24,7 @@ const login = (data) => async (dispatch) => {
     dispatch({
       type: GLOBALTYPES.ALERT,
       payload: {
-        error: error.response.data.msg,
+        error: error.response.data.error,
       },
     });
   }
@@ -64,40 +63,42 @@ const register = (data, navigate) => async (dispatch) => {
 const refreshToken = () => async (dispatch) => {
   const firstLogin = localStorage.getItem('firstLogin');
   if (firstLogin) {
-    dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: { loading: true, refreshToken: 'first' },
+    });
+
     try {
       const res = await postDataAPI('refresh_token');
+
       dispatch({
         type: GLOBALTYPES.AUTH,
-        payload: { token: res.data.access_token, user: res.data.user },
+        payload: {
+          token: res.data.access_token,
+          user: res.data.user,
+        },
       });
-      dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.msg } });
+
+      dispatch({
+        type: GLOBALTYPES.ALERT,
+        payload: { loading: false, refreshToken: 'true' },
+      });
     } catch (error) {
+      console.log(error);
       dispatch({
         type: GLOBALTYPES.ALERT,
         payload: {
-          error: error.response.data.msg,
+          error: error.response.data.error,
+          refreshToken: 'last',
         },
       });
     }
   }
 };
 
-const checkIsValidToken = (token) => (dispatch) => {
-  if (!token) return;
-  let decodeToken = jwtDecode(token);
-  if (token && decodeToken.exp < new Date() / 1000) {
-    dispatch(refreshToken());
-  }
-};
-
-const logout = (navigate, persistor) => async (dispatch) => {
+const logout = (navigate) => async (dispatch) => {
   try {
     localStorage.clear();
-    persistor.pause();
-    persistor.flush().then(() => {
-      return persistor.purge();
-    });
     dispatch({
       type: GLOBALTYPES.AUTH,
       payload: { user: null, token: null },
@@ -114,4 +115,4 @@ const logout = (navigate, persistor) => async (dispatch) => {
   }
 };
 
-export { logout, setMode, login, register, refreshToken, checkIsValidToken };
+export { logout, setMode, login, register, refreshToken };

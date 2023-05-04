@@ -3,7 +3,6 @@ const Posts = require('../models/postModel');
 
 const userController = {
   searchUser: async (req, res) => {
-    console.log({ username: req.query.username });
     try {
       const users = await Users.find({
         userName: { $regex: req.query.username },
@@ -12,7 +11,7 @@ const userController = {
         .select('fullName avatar');
       res.json({ users });
     } catch (error) {
-      return res.status(500).json({ msg: error.message });
+      return res.status(500).json({ error: error.message });
     }
   },
 
@@ -24,8 +23,8 @@ const userController = {
       if (!user) return res.status(400).json({ msg: 'User does not exist.' });
 
       res.status(200).json({ user });
-    } catch (err) {
-      return res.status(500).json({ msg: err.message });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
 
@@ -46,7 +45,7 @@ const userController = {
       });
       res.status(200).json({ msg: 'Cập nhật profile thành công!' });
     } catch (error) {
-      return res.status(500).json({ msg: error.message });
+      return res.status(500).json({ error: error.message });
     }
   },
 

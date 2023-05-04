@@ -1,7 +1,7 @@
 import { GLOBALTYPES, DeleteData } from './globalTypes';
 import { getDataAPI, patchDataAPI } from '../../utils/fetchData';
 import { imageUpload } from '../../utils/imageUpload';
-import {  getPostsUser } from './postAction';
+import { getPostsUser } from './postAction';
 
 export const PROFILE_TYPES = {
   LOGOUT: 'LOGOUT',
@@ -24,10 +24,10 @@ export const getProfileUsers = (id, auth) => async (dispatch) => {
     });
 
     dispatch({ type: PROFILE_TYPES.LOADING, payload: false });
-  } catch (err) {
+  } catch (error) {
     dispatch({
       type: GLOBALTYPES.ALERT,
-      payload: { error: err.response.data.msg },
+      payload: { error: error.response.data.error },
     });
   }
 };
