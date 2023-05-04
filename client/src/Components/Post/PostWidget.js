@@ -7,7 +7,6 @@ import BodyPost from './BodyPost';
 import FooterPost from './FooterPost';
 
 function PostWidget({ postData, auth }) {
-  console.log({ postData });
   const [isComments, setIsComments] = useState(false);
   const handleClick = () => {
     setIsComments(!isComments);

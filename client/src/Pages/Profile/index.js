@@ -26,7 +26,8 @@ function ProfilePage() {
     <>
       {profile.user ? (
         profile.loading ? (
-          <Loading />
+          // <Loading />
+          ''
         ) : (
           <Box
             width="100% - 80px"

@@ -6,7 +6,6 @@ import {
   patchDataAPI,
   deleteDataAPI,
 } from '../../utils/fetchData';
-import { PROFILE_TYPES } from './profileAction';
 
 export const POST_TYPES = {
   CREATE_POST: 'CREATE_POST',
@@ -35,14 +34,8 @@ export const createPost =
         { content, images: media },
         auth.token
       );
-
       dispatch({
         type: POST_TYPES.CREATE_POST,
-        payload: res.data.newPost,
-      });
-
-      dispatch({
-        type: PROFILE_TYPES.ADD_POST,
         payload: res.data.newPost,
       });
 
@@ -115,10 +108,6 @@ export const deletePost =
       const res = await deleteDataAPI(`post/${id}/delete`, auth.token);
       dispatch({
         type: POST_TYPES.DELETE_POST,
-        payload: res.data,
-      });
-      dispatch({
-        type: PROFILE_TYPES.DELETE_POST,
         payload: res.data,
       });
       dispatch({ type: POST_TYPES.LOADING_POST, payload: false });

@@ -22,7 +22,6 @@ const putDataAPI = async (url, post, token) => {
 };
 
 const patchDataAPI = async (url, post, token) => {
-  console.log({ url, post, token });
   const res = await axios.patch(`/api/${url}`, post, {
     headers: { Authorization: token },
   });

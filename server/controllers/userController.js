@@ -3,6 +3,7 @@ const Posts = require('../models/postModel');
 
 const userController = {
   searchUser: async (req, res) => {
+    console.log({ username: req.query.username });
     try {
       const users = await Users.find({
         userName: { $regex: req.query.username },

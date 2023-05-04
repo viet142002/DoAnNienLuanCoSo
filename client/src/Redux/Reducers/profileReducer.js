@@ -14,7 +14,6 @@ const profileReducer = (state = initialState, action) => {
     case PROFILE_TYPES.LOADING:
       return { ...state, loading: action.payload };
     case PROFILE_TYPES.FOLLOW:
-      console.log(state);
       return {
         ...state,
         user: {

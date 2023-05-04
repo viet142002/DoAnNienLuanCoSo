@@ -7,7 +7,6 @@ const authController = {
   register: async (req, res) => {
     try {
       const { firstName, lastName, password, email } = req.body;
-
       const user_email = await Users.findOne({ email });
 
       if (user_email)
@@ -19,10 +18,10 @@ const authController = {
 
       const salt = await bcrypt.genSalt(10);
       const passwordHash = await bcrypt.hash(password, salt);
-      const userName = `${firstName}${lastName}`;
+      const userName = `${firstName.trim()} ${lastName.trim()}`;
       const fullName = `${firstName.trim()} ${lastName.trim()}`;
       const newUser = new Users({
-        userName: userName.toLowerCase().replace(/ /g, ''),
+        userName: userName.toLowerCase(),
         fullName,
         email,
         password: passwordHash,

@@ -1,7 +1,7 @@
 import { GLOBALTYPES, DeleteData } from './globalTypes';
 import { getDataAPI, patchDataAPI } from '../../utils/fetchData';
 import { imageUpload } from '../../utils/imageUpload';
-import { POST_TYPES, getPostsUser } from './postAction';
+import {  getPostsUser } from './postAction';
 
 export const PROFILE_TYPES = {
   LOGOUT: 'LOGOUT',

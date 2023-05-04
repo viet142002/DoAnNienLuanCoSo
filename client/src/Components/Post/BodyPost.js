@@ -14,14 +14,27 @@ function BodyPost({ postData }) {
           autoPlay={false}
           animation="slide"
           duration={650}
+          navButtonsWrapperProps={{
+            style: {
+              display: postData.images.length === 1 && 'none',
+            },
+          }}
+          indicatorContainerProps={{
+            style: {
+              display: postData.images.length === 1 && 'none',
+            },
+          }}
         >
           {postData.images.map((image, index) => (
             <img
               key={index}
               width="100%"
-              height={'auto'}
               alt={image.name}
-              style={{ borderRadius: '0.75rem', marginTop: '0.75rem' }}
+              style={{
+                borderRadius: '0.75rem',
+                marginTop: '0.75rem',
+                minHeight: '300px',
+              }}
               src={image.url}
             />
           ))}

@@ -31,6 +31,7 @@ function MySearch({ bgColor }) {
           setIsLoading(false);
         })
         .catch((error) => {
+          setIsLoading(false);
           dispatch({
             type: GLOBALTYPES.ALERT,
             payload: { error: error.response.data.msg },
@@ -72,17 +73,17 @@ function MySearch({ bgColor }) {
           padding={'0.5rem 1.5rem'}
           zIndex={999}
         >
-          {isLoading && (
+          {isLoading ? (
             <FlexBetween justifyContent={'center !important'}>
               <CircularProgress />
             </FlexBetween>
+          ) : users.length === 0 ? (
+            <Typography align="center">Không tìm thấy người này</Typography>
+          ) : (
+            users.map((user) => (
+              <UserCard key={user._id} user={user} handleClose={handleClose} />
+            ))
           )}
-          {!isLoading && users.length === 0 && (
-            <Typography>Không tìm thấy người dùng</Typography>
-          )}
-          {users.map((user) => (
-            <UserCard key={user._id} user={user} handleClose={handleClose} />
-          ))}
         </Box>
       )}
     </FlexBetween>

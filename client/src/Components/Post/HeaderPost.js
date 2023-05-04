@@ -13,8 +13,6 @@ function HeaderPost({ auth, postData }) {
   const main = palette.neutral.main;
   const isAuth = auth.user._id === postData.user._id;
 
-  console.log({ PostData: postData.user });
-
   return (
     <FlexBetween>
       <FlexBetween
